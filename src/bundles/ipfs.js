@@ -94,7 +94,7 @@ export default {
       )
       const { default: Ipfs } = await import('ipfs')
       console.log('got Ipfs')
-      const ipfs = await initJsIpfs(Ipfs, ipfsOpts)
+      const ipfs = await Ipfs.create(ipfsOpts)
       console.log('got ipfs')
       identity = await ipfs.id()
       console.log('js-ipfs ready!')
@@ -140,12 +140,4 @@ function getUserOpts(key) {
     }
   }
   return userOpts
-}
-
-function initJsIpfs(Ipfs, opts) {
-  return new Promise((resolve, reject) => {
-    const ipfs = new Ipfs(opts)
-    ipfs.once('ready', () => resolve(ipfs))
-    ipfs.once('error', err => reject(err))
-  })
 }
